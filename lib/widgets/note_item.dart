@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:note_app/constants.dart';
 import 'package:note_app/views/edit_note_view.dart';
-import 'package:note_app/widgets/edit_note_body.dart';
 
 class NoteItem extends StatelessWidget {
   const NoteItem({super.key});
@@ -21,7 +21,7 @@ class NoteItem extends StatelessWidget {
             left: 16,
           ),
           decoration: BoxDecoration(
-              color: Colors.amber, borderRadius: BorderRadius.circular(16)),
+              color: kPrimaryColor, borderRadius: BorderRadius.circular(16)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
