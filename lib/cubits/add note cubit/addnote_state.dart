@@ -12,7 +12,7 @@ final class AddnoteSuccess extends AddnoteState {}
 final class AddnoteFailure extends AddnoteState {
   final String errMessage;
 
-  AddnoteFailure({required this.errMessage});
+  AddnoteFailure(this.errMessage);
 }
 
 // Creating a Cubit for every process as a principle of single responsibility.
