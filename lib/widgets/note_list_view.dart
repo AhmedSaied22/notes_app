@@ -5,6 +5,7 @@ import 'package:note_app/constants.dart';
 import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:note_app/models/note_model.dart';
 import 'package:note_app/widgets/note_item.dart';
+import 'package:note_app/widgets/snake_case.dart';
 
 class NotesListView extends StatelessWidget {
   const NotesListView({super.key});
@@ -39,46 +40,8 @@ class NotesListView extends StatelessWidget {
                     ),
                   ),
                   onDismissed: (direction) {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.noHeader,
-                      animType: AnimType.scale,
-                      title: 'Warning',
-                      desc: 'Are you sure for deleting this note?',
-                      btnOkOnPress: () {
-                        notes[index].delete();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            behavior: SnackBarBehavior.floating,
-                            margin: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom,
-                              left: 50,
-                              right: 50,
-                            ),
-                            backgroundColor: kPrimaryColor,
-                            content: const Center(
-                                child: Text(
-                              'Note deleted',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            )),
-                          ),
-                        );
-                        BlocProvider.of<NotesCubit>(context).fetchAllNote();
-                      },
-                      btnCancelOnPress: () {
-                        BlocProvider.of<NotesCubit>(context).fetchAllNote();
-                      },
-                      btnCancelText: 'Cancel',
-                      btnOkText: 'Delete',
-                      titleTextStyle:
-                          const TextStyle(color: kPrimaryColor, fontSize: 22),
-                      descTextStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.8)),
-                    ).show();
+                    awesomeDialog(context, notes, index);
+                    BlocProvider.of<NotesCubit>(context).fetchAllNote();
                   },
                   child: NoteItem(
                     note: notes[index],
@@ -90,5 +53,27 @@ class NotesListView extends StatelessWidget {
         );
       },
     );
+  }
+
+  void awesomeDialog(BuildContext context, List<NoteModel> notes, int index) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      animType: AnimType.scale,
+      title: 'Warning',
+      desc: 'Are you sure for deleting this note?',
+      btnOkOnPress: () {
+        notes[index].delete();
+        snackBar(context);
+        BlocProvider.of<NotesCubit>(context).fetchAllNote();
+      },
+      btnCancelOnPress: () {
+        BlocProvider.of<NotesCubit>(context).fetchAllNote();
+      },
+      btnCancelText: 'Cancel',
+      btnOkText: 'Delete',
+      titleTextStyle: const TextStyle(color: kPrimaryColor, fontSize: 22),
+      descTextStyle: TextStyle(color: Colors.white.withOpacity(0.8)),
+    ).show();
   }
 }

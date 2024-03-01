@@ -42,7 +42,7 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
               onChanged: (value) {
                 title = value;
               },
-              hintText: 'Title'),
+              hintText: '${widget.note.title}'),
           const SizedBox(
             height: 16,
           ),
